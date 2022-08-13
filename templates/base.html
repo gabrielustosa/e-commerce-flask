@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>E-commerce - {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+</head>
+<body>
+<div class="flex flex-col min-h-screen">
+    {% include 'includes/base/nav.html' %}
+    {% with messages=get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            <div class="w-1/3 mx-auto text-center py-2">
+                {% for category, message in messages %}
+                    <div class="p-4 mb-4 text-sm rounded-lg {{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <div class="flex-1 relative">
+        {% block content %}{% endblock %}
+    </div>
+
+    {% include 'includes/base/footer.html' %}
+</div>
+<script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
+<script src="https://unpkg.com/htmx.org@1.7.0"></script>
+<script src="https://unpkg.com/hyperscript.org@0.9.5"></script>
+<script>
+    document.body.addEventListener('htmx:configRequest', (event) => {
+        event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+    })
+</script>
+{% block javascript %}{% endblock %}
+</body>
+</html>
