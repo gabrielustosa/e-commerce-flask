@@ -29,10 +29,15 @@ def create_app(config_class=Config):
 
     from app.apps.auth.routes import auth
     from app.apps.main.routes import main
+    from app.apps.shop.routes import shop
     from app.errors.handlers import errors
 
     app.register_blueprint(auth)
     app.register_blueprint(main)
+    app.register_blueprint(shop)
     app.register_blueprint(errors)
 
     return app
+
+
+from app.apps.shop.models import Category, Product

@@ -1,7 +1,14 @@
-from flask import url_for
+import os
+import secrets
+import unicodedata
+import re
+
+from PIL import Image
+from flask import url_for, current_app
 from flask_mail import Message
 
 from app import mail
+from app.config import BASE_DIR
 
 
 def send_reset_email(user):
@@ -13,6 +20,20 @@ def send_reset_email(user):
     mail.send(message)
 
 
+def save_picture(form_picture, path):
+    random_hex = secrets.token_hex(10)
+    _, f_ext = os.path.splitext(form_picture.filename)
+    picture_fn = random_hex + f_ext
+    picture_path = BASE_DIR / current_app.static_folder / 'images' / path / picture_fn
+
+    output_size = (200, 200)
+    i = Image.open(form_picture)
+    i.thumbnail(output_size)
+    i.save(picture_path)
+
+    return f'images/{path}/{picture_fn}'
+
+
 def get_alert_color(category):
     categories = {
         'error': 'text-red-700 bg-red-100',
@@ -22,3 +43,13 @@ def get_alert_color(category):
         'alert': 'text-gray-700 bg-gray-200',
     }
     return categories[category]
+
+
+def slugify(value, allow_unicode=False):
+    value = str(value)
+    if allow_unicode:
+        value = unicodedata.normalize('NFKC', value)
+    else:
+        value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore').decode('ascii')
+    value = re.sub(r'[^\w\s-]', '', value.lower()).strip()
+    return re.sub(r'[-\s]+', '-', value)

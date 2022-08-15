@@ -15,8 +15,6 @@ def register():
     if current_user.is_authenticated:
         return redirect(url_for('main.home'))
 
-    print(current_app.config['SECRET_KEY'])
-
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')

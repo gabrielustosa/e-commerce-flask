@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Criar
+{% endblock %}
+
+{% block content %}
+    <div class="w-1/2 mx-auto">
+        <h1 class="py-5 text-2xl font-bold text-center">Criando um produto</h1>
+        <form method="POST" action="{{ url_for('shop.create_product') }}" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <div class="bg-white rounded pt-6 pb-8 flex flex-col">
+                <div class="mb-4">
+                    {{ form.name.label(class='block text-grey-darker text-sm font-bold mb-2') }}
+                    {% if form.name.errors %}
+                        {{ form.name(class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3") }}
+                        <div class="text-red-500 text-xs italic">
+                            {% for error in form.name.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.name(class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker") }}
+                    {% endif %}
+                </div>
+                <div class="mb-4">
+                    {{ form.description.label(class='block text-grey-darker text-sm font-bold mb-2') }}
+                    {% if form.description.errors %}
+                        {{ form.description(class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3") }}
+                        <div class="text-red-500 text-xs italic">
+                            {% for error in form.description.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.description(class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker") }}
+                    {% endif %}
+                </div>
+                <div class="mb-4">
+                    {{ form.category.label(class='block text-grey-darker text-sm font-bold mb-2') }}
+                    {% if form.category.errors %}
+                        {{ form.category(class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3") }}
+                        <div class="text-red-500 text-xs italic">
+                            {% for error in form.category.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.category(class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker") }}
+                    {% endif %}
+                </div>
+                <div class="mb-4">
+                    {{ form.image.label(class='block text-grey-darker text-sm font-bold mb-2') }}
+                    {% if form.image.errors %}
+                        {{ form.image(class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3") }}
+                        <div class="text-red-500 text-xs italic">
+                            {% for error in form.image.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.image(class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker") }}
+                    {% endif %}
+                </div>
+                <div class="mb-4">
+                    {{ form.price.label(class='block text-grey-darker text-sm font-bold mb-2') }}
+                    {% if form.price.errors %}
+                        {{ form.price(class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3") }}
+                        <div class="text-red-500 text-xs italic">
+                            {% for error in form.price.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.price(class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker") }}
+                    {% endif %}
+                </div>
+                <div class="mb-4">
+                    {{ form.stock.label(class='block text-grey-darker text-sm font-bold mb-2') }}
+                    {% if form.stock.errors %}
+                        {{ form.stock(class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3") }}
+                        <div class="text-red-500 text-xs italic">
+                            {% for error in form.stock.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.stock(class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker") }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="mb-2">
+                {{ form.submit(class="bg-blue-600 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full cursor-pointer") }}
+            </div>
+        </form>
+    </div>
+{% endblock %}
