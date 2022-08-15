@@ -54,4 +54,5 @@ def create_product():
 @shop.route('/product/<product_slug>')
 def view_product(product_slug):
     product = Product.query.filter_by(slug=product_slug).first_or_404()
-    return render_template('product/view.html', product=product)
+    quantities = (n for n in range(21))
+    return render_template('product/view.html', product=product, quantities=quantities)
