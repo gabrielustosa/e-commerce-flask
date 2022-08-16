@@ -78,9 +78,11 @@
                     <span>Custo total</span>
                     <span>R$ {{ cart.get_total_price() }}</span>
                 </div>
+                <a href="{{ url_for('order.checkout_address') }}">
                 <button class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">
                     Checkout
                 </button>
+                </a>
             </div>
 
         </div>

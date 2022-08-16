@@ -53,3 +53,23 @@ def slugify(value, allow_unicode=False):
         value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore').decode('ascii')
     value = re.sub(r'[^\w\s-]', '', value.lower()).strip()
     return re.sub(r'[-\s]+', '-', value)
+
+
+def get_slug(value, model):
+    slug = slugify(value)
+    if model.query.filter_by(slug=slug).scalar():
+        random_hex = secrets.token_hex(5)
+        slug += f'-{random_hex}'
+    return slug
+
+
+def get_attributes_from_form(form, model, exclude=None):
+    if not exclude:
+        exclude = []
+    variables = [var for var in vars(model).keys() if not var.startswith('_')]
+    for var in variables:
+        try:
+            getattr(form, var)
+        except AttributeError:
+            exclude.append(var)
+    return {var: getattr(form, var).data for var in variables if var not in exclude}

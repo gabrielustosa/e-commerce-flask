@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Checkout
+{% endblock %}
+
+{% block content %}
+    <div class="flex">
+        <div id="summary" class="w-1/4 px-8 py-10">
+            <h1 class="font-semibold text-2xl border-b pb-8">Resumo do pedido</h1>
+            <div class="pt-5 text-lg text-gray-700 font-semibold">
+                {% for item in cart %}
+                    {% with product=item.product %}
+                        <div class="flex justify-between">
+                            <span>{{ product.name }}</span>
+                            <span>{{ item.quantity }}x</span>
+                        </div>
+                    {% endwith %}
+                {% endfor %}
+            </div>
+            <div class="flex font-semibold justify-between py-6 text-sm uppercase">
+                <span>Custo total</span>
+                <span>R$ {{ cart.get_total_price() }}</span>
+            </div>
+        </div>
+
+        <form method="POST" action="{{ url_for('order.checkout', address_id=address_id) }}" class="w-1/2 mx-auto">
+            {{ form.hidden_tag() }}
+            <div class="bg-white rounded pt-6 pb-8 flex flex-col">
+                <div class="mb-4">
+                    {{ form.number.label(class='block text-grey-darker text-sm font-bold mb-2') }}
+                    {% if form.number.errors %}
+                        {{ form.number(class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3") }}
+                        <div class="text-red-500 text-xs italic">
+                            {% for error in form.number.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.number(class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker") }}
+                    {% endif %}
+                </div>
+                <div class="mb-4">
+                    {{ form.expiration_date.label(class='block text-grey-darker text-sm font-bold mb-2') }}
+                    {% if form.expiration_date.errors %}
+                        {{ form.expiration_date(class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3") }}
+                        <div class="text-red-500 text-xs italic">
+                            {% for error in form.expiration_date.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.expiration_date(class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker") }}
+                    {% endif %}
+                </div>
+                <div class="mb-4">
+                    {{ form.cvv.label(class='block text-grey-darker text-sm font-bold mb-2') }}
+                    {% if form.cvv.errors %}
+                        {{ form.cvv(class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3") }}
+                        <div class="text-red-500 text-xs italic">
+                            {% for error in form.cvv.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.cvv(class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker") }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="mb-2">
+                {{ form.submit(class="bg-blue-600 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full cursor-pointer") }}
+            </div>
+        </form>
+    </div>
+{% endblock %}

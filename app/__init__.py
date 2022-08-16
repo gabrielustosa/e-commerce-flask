@@ -31,15 +31,18 @@ def create_app(config_class=Config):
     from app.apps.main.routes import main
     from app.apps.shop.routes import shop
     from app.apps.cart.routes import cart
+    from app.apps.order.routes import order
     from app.errors.handlers import errors
 
     app.register_blueprint(auth)
     app.register_blueprint(main)
     app.register_blueprint(shop)
     app.register_blueprint(cart)
+    app.register_blueprint(order)
     app.register_blueprint(errors)
 
     return app
 
 
 from app.apps.shop.models import Category, Product
+from app.apps.order.models import Order, OrderItem

@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Checkout
+{% endblock %}
+
+{% block content %}
+
+    <div class="flex mx-8">
+        <div class="space-y-4">
+            <h1 class="text-2xl font-bold pt-3">Selecione um endereço</h1>
+            <div class="grid grid-cols-2 gap-3">
+                {% for address in addresses %}
+                    <div class="p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            {{ address.name }}
+                        </h5>
+                        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                            {{ address.address }}
+                        </p>
+                        <a href="{{ url_for('order.checkout', address_id=address.id) }}"
+                           class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            Selecionar
+                        </a>
+                    </div>
+                {% else %}
+                    <h5 class="text-xl font-bold">Você não tem nenhum endereço</h5>
+                {% endfor %}
+            </div>
+
+        </div>
+        <form method="POST" action="{{ url_for('order.checkout_address') }}" class="w-1/2 mx-auto">
+            {{ form.hidden_tag() }}
+            <div class="bg-white rounded pt-6 pb-8 flex flex-col">
+                <div class="mb-4">
+                    {{ form.name.label(class='block text-grey-darker text-sm font-bold mb-2') }}
+                    {% if form.name.errors %}
+                        {{ form.name(class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3") }}
+                        <div class="text-red-500 text-xs italic">
+                            {% for error in form.name.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.name(class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker") }}
+                    {% endif %}
+                </div>
+                <div class="mb-4">
+                    {{ form.postal_code.label(class='block text-grey-darker text-sm font-bold mb-2') }}
+                    {% if form.postal_code.errors %}
+                        {{ form.postal_code(class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3") }}
+                        <div class="text-red-500 text-xs italic">
+                            {% for error in form.postal_code.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.postal_code(class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker") }}
+                    {% endif %}
+                </div>
+                <div class="mb-4">
+                    {{ form.address.label(class='block text-grey-darker text-sm font-bold mb-2') }}
+                    {% if form.address.errors %}
+                        {{ form.address(class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3") }}
+                        <div class="text-red-500 text-xs italic">
+                            {% for error in form.address.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.address(class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker") }}
+                    {% endif %}
+                </div>
+                <div class="mb-2">
+                    {{ form.number.label(class='block text-grey-darker text-sm font-bold mb-2') }}
+                    {% if form.number.errors %}
+                        {{ form.number(class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3") }}
+                        <div class="text-red-500 text-xs italic">
+                            {% for error in form.number.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.number(class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker") }}
+                    {% endif %}
+                </div>
+                <div class="mb-4">
+                    {{ form.complement.label(class='block text-grey-darker text-sm font-bold mb-2') }}
+                    {% if form.complement.errors %}
+                        {{ form.complement(class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3") }}
+                        <div class="text-red-500 text-xs italic">
+                            {% for error in form.complement.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.complement(class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker") }}
+                    {% endif %}
+                </div>
+                <div class="mb-4">
+                    {{ form.city.label(class='block text-grey-darker text-sm font-bold mb-2') }}
+                    {% if form.city.errors %}
+                        {{ form.city(class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3") }}
+                        <div class="text-red-500 text-xs italic">
+                            {% for error in form.city.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.city(class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker") }}
+                    {% endif %}
+                </div>
+                <div class="mb-4">
+                    {{ form.state.label(class='block text-grey-darker text-sm font-bold mb-2') }}
+                    {% if form.state.errors %}
+                        {{ form.state(class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3") }}
+                        <div class="text-red-500 text-xs italic">
+                            {% for error in form.state.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.state(class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker") }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="mb-2">
+                {{ form.submit(class="bg-blue-600 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full cursor-pointer") }}
+            </div>
+        </form>
+    </div>
+{% endblock %}

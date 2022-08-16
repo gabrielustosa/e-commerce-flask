@@ -44,7 +44,7 @@ class Cart:
             self.save()
 
     def clear(self):
-        del self.cart
+        session['cart'] = {}
         self.save()
 
     def get_total_price(self):

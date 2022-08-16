@@ -34,7 +34,7 @@ def cart_remove(product_id):
 def cart_increment(product_id):
     user_cart = Cart()
 
-    user_cart.add(product_id, quantity=int(request.args.get('quantity', 1)))
+    user_cart.add(product_id)
 
     return redirect(url_for('cart.cart_view'))
 

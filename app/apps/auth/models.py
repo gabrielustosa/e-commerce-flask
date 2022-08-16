@@ -16,6 +16,8 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
     products = db.relationship('Product', backref='owner', lazy=True)
+    orders = db.relationship('Order', backref='user', lazy=True)
+    addresses = db.relationship('Address', backref='addresses', lazy=True)
 
     def get_reset_token(self, expires_sec=1800):
         serial = Serializer(current_app.config['SECRET_KEY'], expires_sec)

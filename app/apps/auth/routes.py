@@ -1,11 +1,11 @@
-from flask import render_template, flash, redirect, url_for, request, current_app
+from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, current_user, logout_user, login_required
 from flask import Blueprint
 
 from app.apps.auth.models import User
 from .forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm
 from app import bcrypt, db
-from .utils import send_reset_email, get_alert_color
+from app.utils import send_reset_email, get_alert_color
 
 auth = Blueprint('auth', __name__)
 
